@@ -1,0 +1,32 @@
+<div class="custom-select" (click)="toggleDropdown()">
+    <div class="custom-select__selected">
+        <span class="selected-text" [ngClass]="{'empty': !selectedOption}">{{ selectedOption ? selectedOption.label :
+            placeholder }}</span>
+        <ng-container *ngTemplateOutlet="expandBtn"></ng-container>
+
+    </div>
+
+    <ng-container *ngIf="isOpen">
+        <div class="scroll-wrapper">
+            <div class="custom-select__dropdown" [ngClass]="{'overflow': options.length > MINSCROLLELEMENTS}">
+                <div class="custom-select__option" *ngFor="let option of options"
+                    (click)="selectOption(option, $event)">
+                    {{ option.label }}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #expandBtn>
+    <ng-container *ngIf="isOpen; else isClosed;">
+        <span class="material-symbols-outlined">
+            expand_less
+        </span>
+    </ng-container>
+    <ng-template #isClosed>
+        <span class="material-symbols-outlined">
+            expand_more
+        </span>
+    </ng-template>
+</ng-template>
